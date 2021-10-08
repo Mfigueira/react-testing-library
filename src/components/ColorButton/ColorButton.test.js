@@ -1,5 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import ColorButton from './ColorButton';
+import App from '../App/App';
 
 test('button has correct initial color and text', () => {
   render(<ColorButton />);
@@ -16,4 +17,31 @@ test('button turns blue when clicked', () => {
 
   expect(btn).toHaveStyle({ backgroundColor: 'blue' });
   expect(btn.textContent).toBe('Change to red');
+});
+
+test('initial conditions', () => {
+  render(<ColorButton />);
+
+  const btn = screen.getByRole('button');
+  expect(btn).toBeEnabled();
+
+  const checkbox = screen.getByRole('checkbox');
+  expect(checkbox).not.toBeChecked();
+});
+
+test('checkbox disables/enables button', () => {
+  render(<ColorButton />);
+
+  const btn = screen.getByRole('button');
+  const checkbox = screen.getByRole('checkbox');
+
+  fireEvent.click(checkbox);
+
+  expect(checkbox).toBeChecked();
+  expect(btn).toBeDisabled();
+
+  fireEvent.click(checkbox);
+
+  expect(checkbox).not.toBeChecked();
+  expect(btn).toBeEnabled();
 });
