@@ -15,7 +15,7 @@ test('button turns blue when clicked', () => {
   fireEvent.click(btn);
 
   expect(btn).toHaveStyle({ backgroundColor: 'blue' });
-  expect(btn.textContent).toBe('Change to red');
+  expect(btn).toHaveTextContent('Change to red');
 });
 
 test('initial conditions', () => {
