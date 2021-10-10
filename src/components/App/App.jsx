@@ -1,3 +1,4 @@
+import SummaryForm from '../../pages/summary/SummaryForm';
 import ColorButton from '../ColorButton/ColorButton';
 
 const App = () => {
@@ -6,6 +7,8 @@ const App = () => {
       <h1>App</h1>
 
       <ColorButton />
+
+      <SummaryForm />
     </div>
   );
 };
