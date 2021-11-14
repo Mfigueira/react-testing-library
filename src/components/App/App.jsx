@@ -1,16 +1,33 @@
-import SummaryForm from '../../pages/summary/SummaryForm';
-import ColorButton from '../ColorButton/ColorButton';
+import { useState } from 'react';
+import Container from 'react-bootstrap/Container';
 
-const App = () => {
+import OrderConfirmation from '../../pages/confirmation/OrderConfirmation';
+import OrderEntry from '../../pages/entry/OrderEntry';
+import OrderSummary from '../../pages/summary/OrderSummary';
+
+import { OrderDetailsProvider } from '../../contexts/OrderDetails';
+
+export default function App() {
+  // orderPhase needs to be 'inProgress', 'review' or 'completed'
+  const [orderPhase, setOrderPhase] = useState('inProgress');
+
+  let Component = OrderEntry; // default to order page
+  switch (orderPhase) {
+    case 'inProgress':
+      Component = OrderEntry;
+      break;
+    case 'review':
+      Component = OrderSummary;
+      break;
+    case 'completed':
+      Component = OrderConfirmation;
+      break;
+    default:
+  }
+
   return (
-    <div>
-      <h1>App</h1>
-
-      <ColorButton />
-
-      <SummaryForm />
-    </div>
+    <OrderDetailsProvider>
+      <Container>{<Component setOrderPhase={setOrderPhase} />}</Container>
+    </OrderDetailsProvider>
   );
-};
-
-export default App;
+}
